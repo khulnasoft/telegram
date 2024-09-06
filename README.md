@@ -1,44 +1,50 @@
-# khulnasoft-repo-template
-This repository is used as the boilerplate for consistency across all KhulnaSoft repos.
+# Telegram Web Apps for Bots Example
 
-<div>&nbsp;</div>
+Example HTML-file that contains a plain-JS interaction with Telegram Web Apps API. 
+Live demo: [Attach Bot](https://t.me/khulnasoft_bot).
 
-## Join the KhulnaSoft community!
+## Links
+* Official docs: https://core.telegram.org/bots/webapps
+* Live Demo Bot: [Attach Bot](https://t.me/khulnasoft_bot)
+* Telegram Promo Bot: [Durger King](https://t.me/khulnasoft_bot)
 
-<a name="contributing"></a><a name="community"></a>
-Our projects are community-built and welcome collaboration. 👍 Be sure to see the <a href="https://docs.google.com/document/d/17OPtDE_rdnPQxmk2Kauhm3GwXF1R5dZ3Cj8qZLKdo5E/edit">KhulnaSoft Community Welcome Guide</a> for a tour of resources available to you and jump into our <a href="http://slack.khulnasoft.com">Slack</a>!
+## Quick setup
 
-<p style="clear:both;">
-<a href ="https://khulnasoft.com/community/meshmates"><img alt="MeshMates" src=".github/readme/images/khulnasoft-community-sign.png" style="margin-right:10px; margin-bottom:15px;" width="28%" align="left"/></a>
-<h3>Find your MeshMate</h3>
+#### 0. Host the Web App in GitHub Pages
 
-<p>MeshMates are experienced KhulnaSoft community members, who will help you learn your way around, discover live projects and expand your community network. 
-Become a <b>Meshtee</b> today!</p>
+The Web App must be hosted somewhere. Hosting it on a GitHub repository is a quick, free way to do it:
 
-Find out more on the <a href="https://khulnasoft.com/community">KhulnaSoft community</a>. <br />
-<br /><br /><br /><br />
-</p>
+1. Create a repository (or fork this one)
+2. On the repository: Settings > Pages:
+    - Source: Deploy from a branch
+    - Branch: master, / (root), Save
+3. Wait a few minutes for the web to be deployed. It will be available at: `https://{github-username}.github.io/{repository-name}/{location-inside-repository}`. In this case: `https://khulnasoft.github.io/telegram/index.html`
 
-<div>&nbsp;</div>
+#### 1. Show the user a button to open a Web App. There are two ways:
 
-<a href="https://slack.meshplay.khulnasoft.com">
+1. Show the user a special menu button (near the message input field):
+    1. Go to [Bot Father](https://t.me/BotFather)
+    2. Select your bot
+    3. `Bot Settings` — `Menu Button` — `Specify..`/`Edit menu button URL`
+    4. Send a URL to your Web App (in this case, `https://khulnasoft.github.io/telegram/index.html`)
 
-<picture align="right">
-  <source media="(prefers-color-scheme: dark)" srcset=".github/readme/images//slack-dark-128.png"  width="110px" align="right" style="margin-left:10px;margin-top:10px;">
-  <source media="(prefers-color-scheme: light)" srcset=".github/readme/images//slack-128.png" width="110px" align="right" style="margin-left:10px;padding-top:5px;">
-  <img alt="Shows an illustrated light mode meshplay logo in light color mode and a dark mode meshplay logo dark color mode." src=".github/readme/images//slack-128.png" width="110px" align="right" style="margin-left:10px;padding-top:13px;">
-</picture>
-</a>
+2. The second way is to send a button with the data that contains field `web_app` with a URL to a Web App:
+    ```json
+    {
+        "text": "Test web_app",
+        "web_app": {
+            "url": "https://khulnasoft.github.io/telegram/index.html"
+        }
+    }
+    ```
 
+#### 2. Add script to your Web App
 
-<a href="https://meshplay.khulnasoft.com/community"><img alt="KhulnaSoft Community" src=".github/readme/images//community.svg" style="margin-right:8px;padding-top:5px;" width="140px" align="left" /></a>
+To connect a Web App to the Telegram client, place the script `telegram-web-app.js` in the `<head>` tag before any other scripts, using this code ([more info](https://core.telegram.org/bots/webapps#initializing-web-apps)):
+```html
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+```
 
-<p>
-✔️ <em><strong>Join</strong></em> any or all of the weekly meetings on <a href="https://calendar.google.com/calendar/b/1?cid=bGF5ZXI1LmlvX2VoMmFhOWRwZjFnNDBlbHZvYzc2MmpucGhzQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20">community calendar</a>.<br />
-✔️ <em><strong>Watch</strong></em> community <a href="https://www.youtube.com/playlist?list=PL3A-A6hPO2IMPPqVjuzgqNU5xwnFFn3n0">meeting recordings</a>.<br />
-✔️ <em><strong>Access</strong></em> the <a href="https://drive.google.com/drive/u/4/folders/0ABH8aabN4WAKUk9PVA">Community Drive</a> by completing a community <a href="https://khulnasoft.com/newcomer">Member Form</a>.<br />
-✔️ <em><strong>Discuss</strong></em> in the <a href="https://discuss.khulnasoft.com">Community Forum</a>.<br />
-✔️<em><strong>Explore more</strong></em> in the <a href="https://khulnasoft.com/community/handbook">Community Handbook</a>.<br />
-</p>
-<p align="center">
-<i>Not sure where to start?</i> Grab an open issue with the <a href="https://github.com/issues?q=is%3Aopen+is%3Aissue+archived%3Afalse+org%3Akhulnasoft+org%3Ameshplay+org%3Aservice-mesh-performance+org%3Aservice-mesh-patterns+label%3A%22help+wanted%22+">help-wanted label</a>.</p>
+Once the script is connected, a `window.Telegram.WebApp` object will become available.
+
+#### 3. Do the thing.
